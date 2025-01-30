@@ -1,5 +1,5 @@
-<script>
-  // close sale  and save/send data
+//close sale  and save/send data
+
 
 class Order {
     constructor() {
@@ -318,7 +318,7 @@ class Utilities {
     static convertFloatToString(float) {
         let priceParams = {
             style: "currency",
-            currency: "USD"
+            currency: "INR"
         };
 
         return float.toLocaleString("en-us", priceParams);
@@ -367,7 +367,18 @@ class Utilities {
     }
 }
 
+function printReceipt() {
+    // Extract only the receipt section
+    const receipt = document.getElementById("receipt");
+    const receiptHtml = `<html><head><title>Receipt</title></head><body>${receipt.outerHTML}</body></html>`;
 
+    // Call Apps Script to generate the PDF
+    google.script.run
+      .withSuccessHandler(function (url) {
+        alert("PDF generated! Open it here: " + url);
+      })
+      .generatePdf(receiptHtml);
+  }
 
 
 
@@ -421,6 +432,8 @@ document.querySelectorAll('.paypad-btn').forEach(button => {
 
 
 
+//----------------------- MOCK DATA
+
 const mockMenuData = [
     [101, 'Hamburger', 10.99, 0.05, 'https://i.ibb.co/Vq2Ny7x/burger-min.jpg'],
     [102, 'Fries', 6.99, 0.05, 'https://i.ibb.co/LZj9Z6C/fries-min.jpg'],
@@ -452,4 +465,5 @@ const mockPaymentsData = [
     ["", 5000, 13.59, "cash", 0]
 ]
 
-</script>
+
+
